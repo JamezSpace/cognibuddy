@@ -127,7 +127,7 @@ export class AuthComponent {
 
     // Here you would typically send the user data to your backend for registration
     console.log('User registered:', this.signupFormGroup.value);
-    
+
     this.authService.signUp({
       name: this.signupFormGroup.value.full_name || '',
       email: this.signupFormGroup.value.email || '',
@@ -148,7 +148,12 @@ export class AuthComponent {
 
   loginUser() {
     if (this.ageGroupLogin() === 'child' && (this.loginFormGroup.controls.username.valid && this.loginFormGroup.controls.password.valid)) {
-      alert('all data validated. to be submitted to backend')
+      this.authService.login({
+        name: this.loginFormGroup.controls.username.value || '',
+        email: this.loginFormGroup.controls.email.value || '',
+        password: this.loginFormGroup.controls.password.value || '',
+        role: this.ageGroupLogin() || ''
+      })
     } else if (this.ageGroupLogin() !== 'child' && (this.loginFormGroup.controls.email.valid && this.loginFormGroup.controls.password.valid)) {
       alert('all data validated. to be submitted to backend')
     } else return

@@ -31,4 +31,25 @@ export class AuthService {
       console.error('Error during sign up:', error);
     }
   }
+
+  async login(data_to_send: AuthBodyInterface) {
+    try {
+      const response = await fetch(`${this.backendUrl}/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data_to_send)
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      console.log('User logged in successfully:', data);
+    } catch (error) {
+      console.error('Error during login:', error);
+    }
+  }
 }
