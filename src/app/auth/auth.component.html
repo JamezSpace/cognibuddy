@@ -1,0 +1,153 @@
+<div
+    [className]="loading() ? 'cogni-flex justify-center bg-[rgb(255,255,255,0.7)] fixed left-0 top-0 h-dvh w-dvw': 'none'">
+    <l-grid size="60" speed="1.5" color="black"></l-grid>
+</div>
+
+<div class="flex justify-center items-center w-dvw h-dvh bg-gray-200">
+    <div class="container min-md:px-9 px-4.5 py-7.5 min-md:w-3/4 w-full bg-white rounded-2xl">
+        <header class="cogni-flex">
+            <img src="w-logo.png" alt="CogniBuddy logo" class="max-md:h-7 h-10">
+            <h2>{{ heading_text() }}</h2>
+        </header>
+
+        <div [className]="registration_scheme() === 'register'? 'sign-up-container': 'sign-up-container none'">
+            <div class="registration-container flex gap-5">
+                <section [className]="login_step() === 1 ? 'step step-active' : 'step'">
+                    <form [formGroup]="signupFormGroup">
+                        <div class="field">
+                            <label for="full-name">Full Name</label>
+                            <input type="text" id="full-name" placeholder="Type your full name..."
+                                formControlName="full_name" matInput required />
+                            @if (signupFormGroup.controls.full_name.touched &&
+                            signupFormGroup.controls.full_name.invalid) {
+                            <mat-error>{{ nameErrorMessage(signupFormGroup) }}</mat-error>
+                            }
+                        </div>
+                        <div class="field">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" placeholder="what's your email?" formControlName="email"
+                                matInput required />
+                            @if (signupFormGroup.controls.email.touched && signupFormGroup.controls.email.invalid) {
+                            <mat-error>{{ emailErrorMessage(signupFormGroup) }}</mat-error>
+                            }
+                        </div>
+                        <div class="field">
+                            <label for="age">Signing up as</label>
+                            <select formControlName="age_group" required>
+                                <option value="" disabled>--</option>
+                                @for (age_group of age_groups; track age_group) {
+                                <option [value]="age_group.value">{{ age_group.name }}</option>
+                                }
+                            </select>
+
+                            @if (signupFormGroup.controls.age_group.touched &&
+                            signupFormGroup.controls.age_group.hasError('required')) {
+                            <mat-error>Please choose an age group</mat-error>
+                            }
+                        </div>
+                        <button type="button" class="btn cogni-flex" (click)="validateInputs()">
+                            <span>Next</span>
+                            <mat-icon aria-hidden="false" aria-label="submit arrow icon"
+                                fontIcon="arrow_right_alt"></mat-icon>
+                        </button>
+                    </form>
+                </section>
+                <section [className]="login_step() === 2 ? 'step step-active' : 'step'">
+                    <form [formGroup]="signupFormGroup2">
+                        <h2>Hey {{ fullName }},</h2>
+                        <p>Kindly type a password to get started with CogniBuddy</p>
+                        @if (ageGroup === 'child') {
+                        <div class="field mt-5">
+                            <label for="pin">Enter a 4-digit PIN</label>
+                            <input type="text" inputmode="numeric" maxlength="4" placeholder="Enter a 4-digit PIN"
+                                id="pin" formControlName="password" (keydown)="allowOnlyNumbers($event)" required />
+
+                        </div>
+                        <div class="field">
+                            <label for="confirm-pin">Re-type the PIN</label>
+                            <input type="text" inputmode="numeric" maxlength="4" placeholder="re-type your PIN"
+                                id="confirm-pin" [className]="invalidPassword() ? 'input-invalid' : ''"
+                                (keydown)="allowOnlyNumbers($event)" (blur)="pickValue($event)" />
+                        </div>
+                        }
+                        @else {
+                        <div class="field mt-5">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" placeholder="use a secure password">
+                        </div>
+                        <div class="field">
+                            <label for="confirm-password">Confirm Password</label>
+                            <input type="password" placeholder="re-type your password" id="confirm-password">
+                        </div>
+                        }
+                        <div class="btn-container flex gap-3.5">
+                            <button type="button" class="btn-secondary cogni-flex" (click)="prevPage()">
+                                <span>Back</span>
+                                <mat-icon aria-hidden="false" aria-label="back arrow icon"
+                                    fontIcon="arrow_left_alt"></mat-icon>
+                            </button>
+                            <button type="button" class="btn cogni-flex" (click)="registerUser()">
+                                <span>Let's get started</span>
+                            </button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+
+            <p class="text-center text-[90%] mt-3.5">You have an account? <span class="underline cursor-pointer"
+                    (click)="registration_scheme.set('login')">Log in</span></p>
+        </div>
+
+        <div [className]="registration_scheme() === 'login'? 'login-container': 'login-container none'">
+            <form [formGroup]="loginFormGroup">
+                <h3 class="mb-3.5">Welcome Back</h3>
+                <div class="field">
+                    <label for="age-group">Age Group</label>
+                    <select id="age-group" (change)="renderAppropriateLoginDetails($event)" required>
+                        @for (age_group of age_groups; track age_group) {
+                        <option [value]="age_group.value">{{ age_group.name }}</option>
+                        }
+                    </select>
+                </div>
+                @if (ageGroupLogin() === 'child') {
+                <div class="field">
+                    <label for="login-name">What's your name</label>
+                    <input type="text" id="login-name" formControlName="username"
+                        placeholder="Type your game username..." required />
+
+                    @if (loginFormGroup.controls.username.touched && loginFormGroup.controls.username.invalid) {
+                    <mat-error>{{ nameErrorMessage(loginFormGroup) }}</mat-error>
+                    }
+                    @if (loginError()) {
+                    <mat-error>Your name doesn't exist!</mat-error>
+                    }
+                </div>
+                <div class="field">
+                    <label for="login-pin">Enter your 4-digit PIN</label>
+                    <input type="text" inputmode="numeric" maxlength="4" id="login-pin" formControlName="password"
+                        (keydown)="allowOnlyNumbers($event)" placeholder="* * * *" required />
+                </div>
+
+                }
+                @else{
+                <div class="field">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" formControlName="email" required />
+                </div>
+                <div class="field">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" formControlName="password" required />
+                </div>
+                }
+                <div class="btn-container flex gap-3.5">
+                    <button type="button" class="btn cogni-flex" (click)="loginUser()">
+                        <span>Log In</span>
+                    </button>
+                </div>
+            </form>
+
+            <p class="text-center text-[90%] mt-3.5">New here? <span class="underline cursor-pointer"
+                    (click)="registration_scheme.set('register')">Create an account</span></p>
+        </div>
+    </div>
+</div>

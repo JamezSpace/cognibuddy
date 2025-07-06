@@ -1,0 +1,14 @@
+
+.nav-menu-active {
+    color: #fff;
+    background-color: #000;
+}
+
+header {
+    padding: 15px 20px;
+    justify-content: space-between;
+
+    & > img {
+        width: 50px;
+    }
+}
