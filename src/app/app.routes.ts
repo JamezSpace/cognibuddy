@@ -10,12 +10,12 @@ export const routes: Routes = [
     {
         path: 'auth',
         component: AuthComponent
-    }, 
+    },
     {
         path: 'dashboard/parent',
         component: ParentComponent,
-        canActivate: [authGuard],
-        data: { roles: ['parent'] }
+        // canActivate: [authGuard],
+        // data: { roles: ['parent'] }
     },
     {
         path: 'dashboard/child',

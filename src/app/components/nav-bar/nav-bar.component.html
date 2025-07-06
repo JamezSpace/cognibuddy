@@ -1,13 +1,14 @@
 <header class="cogni-flex">
     <img src="cognibuddy_logo.png" alt="Cognibuddy Logo">
     <nav class="cogni-flex">
-        <ul class="cogni-flex">
-            <li><a routerLink="/home" routerLinkActive="active" class="nav-menu-active">Home</a></li>
-            <li><a routerLink="/about" routerLinkActive="active">My Children</a></li>
-            <li><a routerLink="/contact" routerLinkActive="active">Activity Log</a></li>
-            <li><a routerLink="/login" routerLinkActive="active">Settings</a></li>
+        <ul class="cogni-flex round light-bg">
+            @for (nav of navs; track $index) {
+                <li>
+                    <a [href]="nav.route" class="nav-menu round">{{nav.label}}</a>
+                </li>    
+            }
         </ul>
-        <button (click)="logout()">
+        <button (click)="logout()" class="cogni-flex round light-bg">
             <mat-icon aria-hidden="false" aria-label="logout icon" fontIcon="logout"></mat-icon>
         </button>
     </nav>

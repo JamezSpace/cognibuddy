@@ -29,8 +29,16 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 500;
 }
 
+h1 {
+    font-size: 1.5em;
+    line-height: 1.5em;
+    margin-block: 8px 15px;
+}
+
 h2 {
     font-size: 1.2em;
+    line-height: 1.2em;
+    margin-block: 8px 15px;
 }
 
 .cogni-flex {
@@ -40,6 +48,14 @@ h2 {
 
 .none {
     display: none;
+}
+
+.card  {
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(255, 255, 255, 0.75);
+    border-radius: 24px;
+    border: 1.5px solid #fff;
 }
 
 .mat-mdc-notch-piece.mdc-notched-outline__notch {

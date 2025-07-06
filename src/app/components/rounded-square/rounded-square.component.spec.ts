@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NavBarComponent } from './nav-bar.component';
+import { RoundedSquareComponent } from './rounded-square.component';
 
-describe('NavBarComponent', () => {
-  let component: NavBarComponent;
-  let fixture: ComponentFixture<NavBarComponent>;
+describe('RoundedSquareComponent', () => {
+  let component: RoundedSquareComponent;
+  let fixture: ComponentFixture<RoundedSquareComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NavBarComponent]
+      imports: [RoundedSquareComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(NavBarComponent);
+    fixture = TestBed.createComponent(RoundedSquareComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

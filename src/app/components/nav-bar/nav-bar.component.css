@@ -1,3 +1,14 @@
+.round {
+    border-radius: 30px;
+}
+
+.light-bg {
+    background-color: rgb(255, 255, 255, 0.8);
+}
+
+.nav-menu {
+    padding: 8px 15px;
+}
 
 .nav-menu-active {
     color: #fff;
@@ -8,7 +19,28 @@ header {
     padding: 15px 20px;
     justify-content: space-between;
 
-    & > img {
-        width: 50px;
+    &>img {
+        height: 35px;
+    }
+
+    &>nav ul {
+        margin-right: 20px;
+        font-size: 0.8em;
+        overflow: hidden;
+        padding-block: 15px;
+    }
+
+    &>nav ul li {
+        padding-inline: 10px;
+    }
+
+    &>nav ul li a:hover {
+        color: #fff;
+        background-color: #000d;
+    }
+
+    &>nav button {
+        padding: 8px;
+        justify-content: center;
     }
 }
