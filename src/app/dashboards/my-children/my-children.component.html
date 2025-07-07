@@ -1,0 +1,42 @@
+<div class="cogni-flex flex-wrap gap-3">
+    @for (child of children; track $index) {
+    <section class="card inline-block p-5 relative">
+        <button mat-icon-button [matMenuTriggerFor]="menu" class="absolute top-5 right-5" aria-label="Child options">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+
+        <!-- Menu Options -->
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="editChild(child)">
+                <mat-icon>edit</mat-icon>
+                <span>Edit Profile</span>
+            </button>
+            <button mat-menu-item (click)="deleteChild(child)">
+                <mat-icon>delete</mat-icon>
+                <span>Delete Child</span>
+            </button>
+        </mat-menu>
+        <div class="first-row cogni-flex mb-2.5 gap-3">
+            <div class="avatar-container w-8 p-1.5 rounded-full bg-gray-200 cogni-flex justify-center">
+                <img src="user.png" alt="Child Avatar" class="avatar" />
+            </div>
+            <h2 class="capitalize">{{ child.name }}</h2>
+        </div>
+        <div class="second-row cogni-flex gap-8">
+            <div class="stat">
+                <p class="num">{{ child.games_played || 0 }}</p>
+                <p class="description">games played</p>
+            </div>
+            <div class="stat">
+                <p class="num">{{ child.badges_won || 0 }}</p>
+                <p class="description">badges won</p>
+            </div>
+        </div>
+    </section>
+    }
+
+    <button class="card fixed-size-card" (click)="addChildProfile()">
+        <mat-icon aria-hidden="false" aria-label="add child profile icon" fontIcon="person_add"></mat-icon>
+        <p class="">Add Child Profile</p>
+    </button>
+</div>

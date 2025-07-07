@@ -1,0 +1,15 @@
+<div class="game-container">
+    <h2>🍎 Memory Match Game</h2>
+    <p>Matches: {{ matches }}</p>
+
+    <div class="grid">
+        @for (card of cards; track $index) {
+        <div class="card" [class.flipped]="card.flipped || card.matched" (click)="flipCard(card)">
+            <div class="front">{{ card.image }}</div>
+            <div class="back">❓</div>
+        </div>
+        }
+    </div>
+
+    <button (click)="resetGame()">🔁 Restart</button>
+</div>

@@ -1,0 +1,36 @@
+<div class="p-10 w-full">
+    <h2 class="mb-5">Add Child</h2>
+    <form [formGroup]="addChildForm">
+        <mat-form-field>
+            <mat-label>Child Name</mat-label>
+            <input matInput formControlName="full_name" placeholder="e.g. Sam" />
+
+            @if (addChildForm.get('full_name')?.invalid && (addChildForm.get('full_name')?.dirty ||
+            addChildForm.get('full_name')?.touched)) {
+            <mat-error>Child name is required.</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>4-digit PIN</mat-label>
+            <input matInput formControlName="pin" type="password" maxlength="4" />
+
+            @if (addChildForm.get('pin')?.hasError('pattern')) {
+            <mat-error>Only numbers are allowed in a PIN</mat-error>}
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Confirm PIN</mat-label>
+            <input matInput formControlName="confirm_pin" type="password" maxlength="4" />
+
+            @if (!pinMatch()) {
+            <mat-error>PINs do not match!</mat-error>
+            }
+        </mat-form-field>
+
+        <div class="field cogni-flex justify-between">
+            <button (click)="onNoClick()" class="cogni-button secondary">Cancel</button>
+            <button type="button" class="cogni-button" (click)="submitChild()">Add Child</button>
+        </div>
+    </form>
+</div>

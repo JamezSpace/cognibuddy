@@ -20,25 +20,33 @@ body {
     align-items: center;
 }
 
-input, textarea {
+input,
+textarea {
     border: none;
     outline: none;
 }
 
-h1, h2, h3, h4, h5, h6 {
+button {
+    cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-weight: 500;
 }
 
 h1 {
     font-size: 1.5em;
     line-height: 1.5em;
-    margin-block: 8px 15px;
 }
 
 h2 {
     font-size: 1.2em;
     line-height: 1.2em;
-    margin-block: 8px 15px;
 }
 
 .cogni-flex {
@@ -46,11 +54,43 @@ h2 {
     align-items: center;
 }
 
+.cogni-button {
+    padding: 8px 20px;
+    gap: 8px;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 90%;
+    background-color: black;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition-property: background-color, outline;
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    &:hover {
+        background-color: #444;
+    }
+
+    &:focus {
+        outline: 1px solid #333;
+    }
+}
+
+.cogni-button.secondary {
+    background-color: transparent;
+    color: #000;
+
+    &:hover {
+        outline: 1px solid #000;
+    }
+}
+
 .none {
     display: none;
 }
 
-.card  {
+.card {
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
     background-color: rgba(255, 255, 255, 0.75);

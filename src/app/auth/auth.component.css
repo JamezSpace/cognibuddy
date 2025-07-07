@@ -91,37 +91,3 @@ mat-error {
 .input-invalid {
     border-color: #b20000 !important;
 }
-
-form button {
-    padding: 10px;
-    padding-inline: 20px;
-    gap: 8px;
-    margin-top: 30px;
-    border: 1px solid black;
-    border-radius: 5px;
-    font-size: 90%;
-    background-color: black;
-    color: #fff;
-    font-weight: 600;
-    cursor: pointer;
-    transition-property: background-color, outline;
-    transition-duration: 300ms;
-    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
-}
-
-.btn-secondary.btn-secondary {
-    background-color: transparent;
-    color: #000;
-}
-
-.btn-secondary:hover {
-    outline: 1px solid #000;
-}
-
-.btn:hover {
-    background-color: #444;
-}
-
-.btn:focus {
-    outline: 1.5px solid #333;
-}

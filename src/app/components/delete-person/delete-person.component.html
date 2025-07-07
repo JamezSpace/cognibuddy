@@ -1,0 +1,10 @@
+<section class="p-5">
+    <h1 class="mb-2.5">Delete a {{data.person}}</h1>
+    <p>Are you sure you want to delete <span class="capitalize">{{ data.name }}</span>?</p>
+    <p class="text-red-500">This action cannot be undone.</p>
+    <div class="button-container mt-5 cogni-flex justify-between">
+        <button mat-button (click)="onNoClick()" class="cogni-button secondary">Cancel</button>
+        <button mat-raised-button color="warn" (click)="deletePerson()" class="cogni-button"
+            style="background-color: #fb2c36;">Delete</button>
+    </div>
+</section>

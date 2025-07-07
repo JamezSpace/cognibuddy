@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { NavBarComponent } from "../../components/nav-bar/nav-bar.component";
-import { RoundedSquareComponent } from "../../components/rounded-square/rounded-square.component";
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-parent',
-  imports: [NavBarComponent, RoundedSquareComponent, MatProgressBarModule],
+  imports: [NavBarComponent, RouterOutlet],
   templateUrl: './parent.component.html',
   styleUrl: './parent.component.css'
 })

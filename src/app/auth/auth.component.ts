@@ -3,8 +3,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { Component, signal, computed, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, signal, computed, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
 import { AuthService } from '../services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-auth',
@@ -18,6 +19,7 @@ export class AuthComponent {
     constructor(authService: AuthService) {
         this.authService = authService;
     }
+    router = inject(Router);
 
     loading = signal(false);
     registration_scheme = signal('login'); // 'login' or 'register'
@@ -111,19 +113,18 @@ export class AuthComponent {
     invalidPassword = signal(false);
 
     isPasswordConfirmed(): boolean {
-        const password = this.signupFormGroup.get('password')?.value;
+        const password = this.signupFormGroup2.get('password')?.value;
         const confirmPassword = this.re_typed_password();
 
         if (password !== confirmPassword) {
             this.invalidPassword.set(true);
-            alert('Passwords do not match!');
             return false;
         }
 
         return true;
     }
 
-    registerUser() {
+    async registerUser() {
         if (!this.isPasswordConfirmed()) {
             return;
         }
@@ -131,12 +132,23 @@ export class AuthComponent {
         // Here you would typically send the user data to your backend for registration
         console.log('User registered:', this.signupFormGroup.value);
 
-        this.authService.signUp({
+        this.loading.set(true);
+
+        const response = await this.authService.signUp({
             name: this.signupFormGroup.value.full_name || '',
             email: this.signupFormGroup.value.email || '',
             password: this.signupFormGroup2.value.password || '',
             role: this.signupFormGroup.value.age_group || ''
         });
+
+        if (response.userId) {
+            this.loading.set(false);
+            this.router.navigate(['/auth/login']);
+        } else {
+            this.loading.set(false);
+            alert('An error occurred while registering. Please try again.');
+            return;
+        }
     }
 
     loginFormGroup = new FormGroup({
@@ -149,39 +161,41 @@ export class AuthComponent {
         this.ageGroupLogin.set(e.target.value);
     }
 
-    loginError = signal(false)
+    loginError = signal({valid: false, message: ''});
 
     async loginUser() {
-        if (this.ageGroupLogin() === 'child' && (this.loginFormGroup.controls.username.valid && this.loginFormGroup.controls.password.valid)) {
-            this.loading.set(true);
+        const isChild = this.ageGroupLogin() === 'child';
+        const controls = this.loginFormGroup.controls;
 
-            const response = await this.authService.login({
-                name: this.loginFormGroup.controls.username.value || '',
-                email: this.loginFormGroup.controls.email.value || '',
-                password: this.loginFormGroup.controls.password.value || '',
-                role: this.ageGroupLogin() || ''
-            })
-            
-            if (response === undefined) {
-                this.loading.set(false);    
-                alert('An error occurred while logging in. Please try again.');
-                return;
-            } else if (response === 'not found') {
-                this.loginError.set(true);
-                this.loading.set(false);
-                return;
-            }
+        const isValid =
+            (isChild && controls.username.valid && controls.password.valid) ||
+            (!isChild && controls.email.valid && controls.password.valid);
 
-            console.log("Response from login:", response);
+        if (!isValid) return;
 
-            if (response.status === 'success') {
-                this.loading.set(false);
-                
-                // Redirect to the appropriate page or perform any other action
-            }
-        } else if (this.ageGroupLogin() !== 'child' && (this.loginFormGroup.controls.email.valid && this.loginFormGroup.controls.password.valid)) {
-            alert('all data validated. to be submitted to backend')
-        } else return
+        this.loading.set(true);
+
+        const response = await this.authService.login({
+            name: controls.username.value || '',
+            email: controls.email.value || '',
+            password: controls.password.value || '',
+            role: this.ageGroupLogin() || ''
+        });
+
+        this.loading.set(false);
+
+        if (!response) {
+            alert('An error occurred while logging in. Please try again.');
+            return;
+        }
+
+        if (response.valid === false) {
+            this.loginError.set({valid: false, message: response.message});
+            return;
+        } 
+
+        localStorage.setItem('access_token', response.accessToken);
+        this.router.navigate([`/dashboard/${this.ageGroupLogin()}`]);
     }
 
 }

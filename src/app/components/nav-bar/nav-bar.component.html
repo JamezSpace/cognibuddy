@@ -4,7 +4,12 @@
         <ul class="cogni-flex round light-bg">
             @for (nav of navs; track $index) {
                 <li>
-                    <a [href]="nav.route" class="nav-menu round">{{nav.label}}</a>
+                    <a 
+                        [routerLink]="nav.route" 
+                        routerLinkActive="active"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        class="nav-menu round"
+                    >{{nav.label}}</a>
                 </li>    
             }
         </ul>

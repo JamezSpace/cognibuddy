@@ -1,0 +1,15 @@
+.num {
+    font-size: 20px;
+}
+.description {
+    font-size: 14px;
+    color: #666;
+}
+.fixed-size-card {
+    width: 200px;
+    height: 140px;
+    display: inline-block;
+}
+mat-icon {
+    margin-bottom: 10px;
+}
