@@ -43,7 +43,7 @@ export const routes: Routes = [
                 component: ChildDashboardHomepageComponent
             },
             {
-                path: 'games/memory',
+                path: 'games/memory-game',
                 component: MemoryGameComponent
             },
             {

@@ -1,0 +1,13 @@
+.badge {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 4px 8px;
+  background: gold;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.card {
+    background-color: #dbeafe;
+    padding: 8px;
+}
