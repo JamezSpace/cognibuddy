@@ -8,6 +8,8 @@ import { ParentOverviewComponent } from './dashboards/parent-overview/parent-ove
 import { MyChildrenComponent } from './dashboards/my-children/my-children.component';
 import { MemoryGameComponent } from './games/memory-game/memory-game.component';
 import { ChildDashboardHomepageComponent } from './dashboards/child-dashboard-homepage/child-dashboard-homepage.component';
+import { NumberTrailComponent } from './games/number-trail/number-trail.component';
+import { EmotionMatchComponent } from './games/emotion-match/emotion-match.component';
 
 export const routes: Routes = [
     {
@@ -43,6 +45,14 @@ export const routes: Routes = [
             {
                 path: 'games/memory',
                 component: MemoryGameComponent
+            },
+            {
+                path: 'games/number-trail',
+                component: NumberTrailComponent
+            },
+            {
+                path: 'games/emotion-match',
+                component: EmotionMatchComponent
             }
         ]
     },

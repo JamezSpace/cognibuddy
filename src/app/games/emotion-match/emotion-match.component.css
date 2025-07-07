@@ -1,0 +1,36 @@
+.emotion-game {
+  text-align: center;
+  padding: 1rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 100px);
+  gap: 12px;
+  justify-content: center;
+  margin: 1rem auto;
+}
+
+.card {
+  width: 100px;
+  height: 100px;
+  font-size: 1.5rem;
+  border-radius: 8px;
+  background-color: #fff;
+  border: 2px solid #aaa;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform 0.4s ease;
+  user-select: none;
+}
+
+.card.flipped {
+  background-color: #e0ffe0;
+}
+
+.controls {
+  margin-top: 1rem;
+}

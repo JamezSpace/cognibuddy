@@ -1,0 +1,24 @@
+<div class="trail-container">
+    <button class="back-btn -translate-x-full" (click)="goBack()">⬅️ Back to Game Selection</button>
+
+    <h2>🔢 Number Trail</h2>
+
+    @if (!completed) {
+    <p>Tap numbers from 1 to 10 in order!</p>
+    }
+    @if (completed) {
+    <p>🎉 Finished in {{ ((endTime - startTime) / 1000).toFixed(2) }}s — Score: {{ score }}</p>
+    }
+
+    <div class="grid">
+        @for (num of numbers; track $index) {
+        <button [disabled]="num === -1" [class.tapped]="num === -1" class="btn" (click)="onNumberClick(num)">
+        {{ num !== -1 ? num : '' }}
+        </button>
+        }
+    </div>
+
+    <div class="controls">
+        <button (click)="resetGame()">🔁 Restart</button>
+    </div>
+</div>

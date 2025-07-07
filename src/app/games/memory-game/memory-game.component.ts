@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Card } from '../../interfaces/card.interface';
 import { environment } from '../../../environments/environment';
+import { ChildDashboardService } from '../../services/child/child-dashboard.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'memory-game',
@@ -10,12 +12,20 @@ import { environment } from '../../../environments/environment';
 })
 export class MemoryGameComponent {
     private access_token = localStorage.getItem('access_token');
+    private childDashboardService: ChildDashboardService
+
+    constructor(childDashboardService: ChildDashboardService, private router: Router) {
+        this.childDashboardService = childDashboardService;
+    }
+
+
     cards: Card[] = [];
     flippedCards: Card[] = [];
     lockBoard = false;
     matches = 0;
     score = 0;
     attempts = 0;
+    gameOver = false;
 
     images = [
         '🍎', '🍌', '🍇', '🍓', '🍍', '🥝'
@@ -23,6 +33,10 @@ export class MemoryGameComponent {
 
     ngOnInit() {
         this.initializeGame();
+    }
+
+    goBack() {
+        this.router.navigate(['/dashboard/child']);
     }
 
     initializeGame() {
@@ -41,7 +55,7 @@ export class MemoryGameComponent {
 
         card.flipped = true;
         this.flippedCards.push(card);
-        this.attempts++; // ✅ Count every flip
+        this.attempts++;
 
         if (this.flippedCards.length === 2) {
             this.lockBoard = true;
@@ -50,12 +64,13 @@ export class MemoryGameComponent {
             if (first.image === second.image) {
                 first.matched = second.matched = true;
                 this.matches++;
-                this.lockBoard = false;
                 this.flippedCards = [];
+                this.lockBoard = false;
 
                 if (this.matches === this.images.length) {
                     this.calculateScore();
-                    this.saveGameResult();
+                    this.gameOver = true;
+                    this.saveGameResult(); // if connected to backend
                 }
             } else {
                 setTimeout(() => {
@@ -72,6 +87,7 @@ export class MemoryGameComponent {
         this.score = Math.round((this.matches / this.attempts) * 100);
     }
 
+
     async saveGameResult() {
         try {
             await fetch(`${environment.backend.base_url}/games/memory`, {
@@ -81,7 +97,7 @@ export class MemoryGameComponent {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    child_id: this.childId,
+                    child_id: this.childDashboardService._id,
                     matches: this.matches,
                     attempts: this.attempts,
                     score: this.score,
@@ -96,5 +112,9 @@ export class MemoryGameComponent {
 
     resetGame() {
         this.initializeGame();
+        this.gameOver = false;
+        this.attempts = 0;
+        this.score = 0;
     }
+
 }

@@ -6,6 +6,10 @@
     background-color: rgb(255, 255, 255, 0.8);
 }
 
+.bg-blue {
+    background-color: #dee8fa;
+}
+
 .nav-menu {
     padding: 8px 15px;
 }

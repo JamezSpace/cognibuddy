@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ChildDashboardService } from '../../services/child/child-dashboard.service';
 
 @Component({
   selector: 'child-dashboard-homepage',
@@ -8,7 +9,22 @@ import { RouterModule } from '@angular/router';
   styleUrl: './child-dashboard-homepage.component.css'
 })
 export class ChildDashboardHomepageComponent {
-    constructor() { }
+    private childDashboardService: ChildDashboardService;
+    constructor(childDashboardService: ChildDashboardService) {
+        this.childDashboardService = childDashboardService;
+    }
 
-    childName: string = 'Child'; // This should be dynamically set based on the logged-in child's profile
+    get username(): string {
+        return this.childDashboardService.username;
+    }
+
+    get _id(): string {
+        return this.childDashboardService._id;
+    }
+
+    games = [
+        { name: 'Memory Game', route: 'games/memory-game' },
+        { name: 'Number Trail', route: 'games/number-trail' },
+        { name: 'Emotion Match', route: 'games/emotion-match' }
+    ];
 }

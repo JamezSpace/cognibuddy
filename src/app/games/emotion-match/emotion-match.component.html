@@ -1,0 +1,21 @@
+<div class="emotion-game">
+    <h2>🧠 Emotion Match</h2>
+    @if (!completed) {
+    <p>Match each emotion word with the correct face!</p>
+    } @else {
+    <p>🎉 Finished! Score: {{ score }}%</p>
+    }
+
+    <div class="grid">
+        @for (card of cards; track $index) {
+        <div class="card" [class.flipped]="card.flipped || card.matched" (click)="flipCard(card)">
+            <div class="front">{{ card.type === 'image' ? card.value : card.value }}</div>
+            <div class="back">❓</div>
+        </div>
+        }
+    </div>
+
+    <div class="controls">
+        <button (click)="resetGame()">🔁 Restart</button>
+    </div>
+</div>

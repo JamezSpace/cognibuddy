@@ -1,6 +1,15 @@
 <div class="game-container">
-    <h2>🍎 Memory Match Game</h2>
-    <p>Matches: {{ matches }}</p>
+    <button class="back-btn -translate-x-full" (click)="goBack()">⬅️ Back to Game Selection</button>
+
+    <h2>🧠 Memory Match Game</h2>
+
+    <div class="stats">
+        <p>Matches: {{ matches }} / {{ images.length }}</p>
+        <p>Attempts: {{ attempts }}</p>
+        @if (score) {
+        <p>Score: {{ score }}%</p>
+        }
+    </div>
 
     <div class="grid">
         @for (card of cards; track $index) {
@@ -11,5 +20,11 @@
         }
     </div>
 
-    <button (click)="resetGame()">🔁 Restart</button>
+    @if (gameOver) {
+    <div class="game-result">
+        <p>🎉 Great job! Your score is {{ score }}%</p>
+        <button (click)="resetGame()">🔁 Play Again</button>
+    </div>
+    }
+
 </div>

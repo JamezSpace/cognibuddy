@@ -1,0 +1,88 @@
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
+
+@Component({
+    selector: 'number-trail',
+    imports: [],
+    templateUrl: './number-trail.component.html',
+    styleUrl: './number-trail.component.css'
+})
+export class NumberTrailComponent {
+    numbers: number[] = [];
+    nextNumber = 1;
+    startTime: number = 0;
+    endTime: number = 0;
+    completed = false;
+    score = 0;
+
+    constructor(private router: Router) { }
+    private access_token: string | null = localStorage.getItem('access_token');
+
+    ngOnInit() {
+        this.resetGame();
+    }
+
+    goBack() {
+        this.router.navigate(['/dashboard/child']);
+    }
+
+    resetGame() {
+        this.numbers = this.shuffleArray([...Array(10).keys()].map(i => i + 1));
+        this.nextNumber = 1;
+        this.startTime = 0;
+        this.endTime = 0;
+        this.completed = false;
+        this.score = 0;
+    }
+
+    shuffleArray(arr: number[]): number[] {
+        return arr.sort(() => Math.random() - 0.5);
+    }
+
+    onNumberClick(n: number) {
+        if (this.completed || n !== this.nextNumber) return;
+
+        if (this.nextNumber === 1) {
+            this.startTime = performance.now();
+        }
+
+        this.numbers = this.numbers.map(val => (val === n ? -1 : val)); // -1 means tapped
+        this.nextNumber++;
+
+        if (this.nextNumber > 10) {
+            this.endTime = performance.now();
+            this.completed = true;
+            this.calculateScore();
+        }
+    }
+
+    calculateScore() {
+        const duration = (this.endTime - this.startTime) / 1000;
+        this.score = Math.max(100 - Math.round(duration * 10), 0);
+        this.saveGameResult(); // 👈 Save to backend
+    }
+
+    async saveGameResult() {
+        try {
+            await fetch(`${environment.backend.base_url}/games/number-trail`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${this.access_token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    score: this.score,
+                    matches: 10,          // always 10 for number trail
+                    attempts: 10,         // same here
+                    date_played: new Date()
+                })
+            });
+
+            console.log('Game result saved');
+        } catch (error) {
+            console.error('Failed to save result', error);
+        }
+    }
+
+}

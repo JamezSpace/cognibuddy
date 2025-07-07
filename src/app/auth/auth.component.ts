@@ -195,6 +195,9 @@ export class AuthComponent {
         } 
 
         localStorage.setItem('access_token', response.accessToken);
+        localStorage.setItem('user_id', response.id);
+        localStorage.setItem('user_name', response.name);
+        localStorage.setItem('user_role', this.ageGroupLogin());
         this.router.navigate([`/dashboard/${this.ageGroupLogin()}`]);
     }
 
