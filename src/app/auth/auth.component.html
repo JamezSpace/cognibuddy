@@ -7,7 +7,8 @@
     <div class="container min-md:px-9 px-4.5 py-7.5 min-md:w-3/4 w-full bg-white rounded-2xl">
         <header class="cogni-flex">
             <img src="w-logo.png" alt="CogniBuddy logo" class="max-md:h-7 h-10">
-            <h2>{{ heading_text() }}</h2>
+            <span class="block h-7 w-[1.5px] bg-black ml-3 mr-1.5"></span>
+            <h3>{{ heading_text() }}</h3>
         </header>
 
         <div [className]="registration_scheme() === 'register'? 'sign-up-container': 'sign-up-container none'">
@@ -104,7 +105,7 @@
 
         <div [className]="registration_scheme() === 'login'? 'login-container': 'login-container none'">
             <form [formGroup]="loginFormGroup">
-                <h3 class="mb-3.5">Welcome Back</h3>
+                <h2 class="mb-3.5">Welcome Back</h2>
                 <div class="field">
                     <label for="age-group">Age Group</label>
                     <select id="age-group" (change)="renderAppropriateLoginDetails($event)" required>
@@ -129,7 +130,7 @@
                 <div class="field">
                     <label for="login-pin">Enter your 4-digit PIN</label>
                     <input type="text" inputmode="numeric" maxlength="4" id="login-pin" formControlName="password"
-                        (keydown)="allowOnlyNumbers($event)" placeholder="* * * *" required />
+                        (keydown)="allowOnlyNumbers($event)" placeholder="type the 4-digit PIN your parent set" required />
 
                         @if (!loginError().valid && loginError().message === 'Invalid password') {
                     <mat-error>Invalid password!</mat-error>

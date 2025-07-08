@@ -1,20 +1,42 @@
 <header class="cogni-flex bg-blue">
     <img src="cognibuddy_logo.png" alt="Cognibuddy Logo">
-    <nav class="cogni-flex">
-        <ul class="cogni-flex round light-bg">
+    <nav class="cogni-flex gap-3">
+        <ul class="max-sm:hidden flex items-center round light-bg">
             @for (nav of navs; track $index) {
-                <li>
-                    <a 
-                        [routerLink]="nav.route" 
-                        routerLinkActive="active"
-                        [routerLinkActiveOptions]="{ exact: true }"
-                        class="nav-menu round"
-                    >{{nav.label}}</a>
-                </li>    
+            <li>
+                <a [routerLink]="nav.route" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+                    class="nav-menu round">{{nav.label}}</a>
+            </li>
             }
         </ul>
-        <button (click)="logout()" class="cogni-flex round light-bg">
+        <button (click)="logout()" class="max-sm:hidden flex items-center round light-bg">
             <mat-icon aria-hidden="false" aria-label="logout icon" fontIcon="logout"></mat-icon>
+        </button>
+        <button type="button" class="hidden max-sm:flex max-sm:items-center round light-bg" (click)="toggleSidenav()">
+            @if (!navbarOpened()) {
+            <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 20 20">
+                <rect width="20" height="20" fill="none" />
+                <path fill="currentColor" fill-rule="evenodd"
+                    d="M3 7a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1m0 6a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1"
+                    clip-rule="evenodd" />
+            </svg>
+            } @else {
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 512 512"><rect width="512" height="512" fill="none"/><path fill="currentColor" d="M400 145.49L366.51 112L256 222.51L145.49 112L112 145.49L222.51 256L112 366.51L145.49 400L256 289.49L366.51 400L400 366.51L289.49 256z"/></svg>
+            }
         </button>
     </nav>
 </header>
+
+<div [className]="!navbarOpened() ? 'nav-container closed' : 'nav-container'">
+    <nav class="py-1 flex flex-col gap-3 px-10">
+        <ul class="flex flex-col gap-3 items-center mb-5">
+            @for (nav of navs; track $index) {
+            <li>
+                <a [routerLink]="nav.route" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+                    class="nav-menu">{{nav.label}}</a>
+            </li>
+            }
+        </ul>
+        <button (click)="logout()" type="button" class="cogni-button secondary">Logout</button>
+    </nav>
+</div>

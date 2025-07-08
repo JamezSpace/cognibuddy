@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { environment } from '../../../environments/environment';
@@ -20,6 +20,7 @@ export class NavBarComponent {
 
     @Input({ required: true })
     navs!: NavItems[];
+    navbarOpened = signal(false);
 
     async logout() {
         // Call backend to clear the refreshToken cookie
@@ -31,6 +32,10 @@ export class NavBarComponent {
         localStorage.removeItem('access_token');
 
         this.router.navigate(['/auth']);
+    }
+
+    toggleSidenav() {
+        this.navbarOpened.set(!this.navbarOpened());
     }
 
 }

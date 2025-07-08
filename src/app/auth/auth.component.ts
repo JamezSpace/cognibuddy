@@ -136,8 +136,8 @@ export class AuthComponent {
         this.loading.set(true);
 
         const response = await this.authService.signUp({
-            name: this.signupFormGroup.value.full_name || '',
-            email: this.signupFormGroup.value.email || '',
+            name: this.signupFormGroup.value.full_name?.toLowerCase() || '',
+            email: this.signupFormGroup.value.email?.toLowerCase() || '',
             password: this.signupFormGroup2.value.password || '',
             role: this.signupFormGroup.value.age_group || ''
         });
@@ -177,8 +177,8 @@ export class AuthComponent {
         this.loading.set(true);
 
         const response = await this.authService.login({
-            name: controls.username.value || '',
-            email: controls.email.value || '',
+            name: controls.username.value?.toLowerCase() || '',
+            email: controls.email.value?.toLowerCase() || '',
             password: controls.password.value || '',
             role: this.ageGroupLogin() || ''
         });
