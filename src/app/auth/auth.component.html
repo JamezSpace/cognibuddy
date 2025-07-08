@@ -35,7 +35,7 @@
                             <label for="age">Signing up as</label>
                             <select formControlName="age_group" required>
                                 <option value="" disabled>--</option>
-                                @for (age_group of age_groups; track age_group) {
+                                @for (age_group of age_group_signup; track age_group) {
                                 <option [value]="age_group.value">{{ age_group.name }}</option>
                                 }
                             </select>

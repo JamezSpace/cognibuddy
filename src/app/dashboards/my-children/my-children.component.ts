@@ -21,8 +21,8 @@ export class MyChildrenComponent implements OnInit {
         return this.parentDashboardService.children();
     }
 
-    ngOnInit() {
-        this.parentDashboardService.fetchChildren();
+    async ngOnInit() {
+        await this.parentDashboardService.fetchChildren();
     }
 
     addChildProfile() {

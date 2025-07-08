@@ -10,6 +10,7 @@ import { MemoryGameComponent } from './games/memory-game/memory-game.component';
 import { ChildDashboardHomepageComponent } from './dashboards/child-dashboard-homepage/child-dashboard-homepage.component';
 import { NumberTrailComponent } from './games/number-trail/number-trail.component';
 import { EmotionMatchComponent } from './games/emotion-match/emotion-match.component';
+import { GamesComponent } from './components/games/games.component';
 
 export const routes: Routes = [
     {
@@ -43,6 +44,10 @@ export const routes: Routes = [
                 component: ChildDashboardHomepageComponent
             },
             {
+                path: 'games',
+                component: GamesComponent
+            },
+            {
                 path: 'games/memory-game',
                 component: MemoryGameComponent
             },
@@ -53,6 +58,10 @@ export const routes: Routes = [
             {
                 path: 'games/emotion-match',
                 component: EmotionMatchComponent
+            },
+            {
+                path: 'progress',
+                loadComponent: () => import('./dashboards/child-progress/child-progress.component').then(m => m.ChildProgressComponent)
             }
         ]
     },

@@ -1,12 +1,15 @@
-<h1>Welcome Back, James</h1>
+<h1>Welcome Back, 
+    <span class="capitalize">{{ name }}</span></h1>
 <div class="overview-container cogni-flex gap-3 flex-wrap mb-9">
-    <rounded-square [num]="2" description="active children" />
-    <rounded-square [num]="83" description="total game played" />
-    <rounded-square [num]="20" description="badges earned" />
-    <rounded-square [num]="55" description="minutes today" />
+    <rounded-square [num]="children.length" description="registered children" />
+    <rounded-square [num]="totalGamesPlayed" description="total game played" />
+    <rounded-square [num]="badgesEarned" description="badges earned" />
+    <rounded-square [num]="0" description="minutes today" />
 </div>
 <div class="progress-overview-container card px-5 py-5">
     <h2>Weekly Progress</h2>
-    <p>Emma</p>
+    @for (child of children; track $index) {
+    <p class="capitalize">{{ child.name }}</p>
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
 </div>

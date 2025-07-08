@@ -2,32 +2,21 @@
     <h1>Welcome <span class="capitalize">{{ username }}</span></h1>
     <p>What game would you like to play today?</p>
 
-    <section class="mt-5">
-        @for (game of games; track $index) {
-        <button type="button" class="card block mb-3.5 w-full text-left bg-blue-100" [routerLink]="game.route">
-            <div class="row-one cogni-flex gap-2 mb-2">
-                <img src="{{ game.img }}" alt="{{ game.name }}" class="w-10" />
-                <h2>{{ game.name }}</h2>
-            </div>
-            <p>{{ game.description}}</p>
-        </button>
-        }
-    </section>
+    <games />
 
-    @for (game of summaries; track $index) {
-    <h2 class="mt-5">Here is a statistics on the game you've played:</h2>
-    <div class="game-summary">
+    <h2 class="mt-15 mb-5">Here is a statistics on the game you've played:</h2>
+    @for (game of summaries(); track $index) {
+    <div class="game-summary border p-4 rounded mb-4 shadow">
         <h3 class="capitalize mt-2.5">{{ game.game }}</h3>
-        <p>Latest Score: <strong>{{ game.latestScore }}%</strong></p>
+        <p>Latest Score: <strong>{{ game.recentScore }}%</strong></p>
         <p>Average Score: <strong>{{ game.averageScore }}%</strong></p>
         @if(game.badges.length > 0) {
         <p>Badges:
             @for (item of game.badges; track $index) {
-                <span class="badge">{{ item }}</span>
+            <span class="badge">{{ item }}</span>
             }
         </p>
-    }
-        <hr />
+        }
     </div>
-}
+    }
 </div>

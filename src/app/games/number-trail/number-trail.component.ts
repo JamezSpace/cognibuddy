@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { ChildDashboardService } from '../../services/child/child-dashboard.service';
 
 @Component({
     selector: 'number-trail',
@@ -8,7 +9,7 @@ import { environment } from '../../../environments/environment';
     templateUrl: './number-trail.component.html',
     styleUrl: './number-trail.component.css'
 })
-export class NumberTrailComponent {
+export class NumberTrailComponent implements OnInit {
     numbers: number[] = [];
     nextNumber = 1;
     startTime: number = 0;
@@ -16,15 +17,15 @@ export class NumberTrailComponent {
     completed = false;
     score = 0;
 
-    constructor(private router: Router) { }
+    constructor(private childDashboardService: ChildDashboardService) { }
     private access_token: string | null = localStorage.getItem('access_token');
 
+    get goBack() {
+        return this.childDashboardService.goBack.bind(this.childDashboardService);
+    }
+    
     ngOnInit() {
         this.resetGame();
-    }
-
-    goBack() {
-        this.router.navigate(['/dashboard/child']);
     }
 
     resetGame() {

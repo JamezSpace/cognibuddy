@@ -1,0 +1,47 @@
+<div class="progress-container p-6 max-w-3xl mx-auto">
+    <h2 class="text-2xl font-bold mb-4 text-center">📈 Your Progress</h2>
+
+    <section class="overall-stats grid grid-cols-2 gap-4 text-center mb-6">
+        <div class="stat-card bg-blue-100 p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold">Games Played</h3>
+            <p class="text-2xl">{{ totalGames }}</p>
+        </div>
+        <div class="stat-card bg-green-100 p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold">Average Score</h3>
+            <p class="text-2xl">{{ averageScore }}%</p>
+        </div>
+        <div class="stat-card bg-yellow-100 p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold">Best Score</h3>
+            <p class="text-2xl">{{ highestScore }}%</p>
+        </div>
+        <div class="stat-card bg-purple-100 p-4 rounded-lg shadow">
+            <h3 class="text-lg font-semibold">Active Days</h3>
+            <p class="text-2xl">{{ activeDays || '—' }}</p>
+        </div>
+    </section>
+
+    <section class="game-summary">
+        <h3 class="text-xl font-bold mb-3">🎮 Game Details</h3>
+        @for (summary of summaries; track $index) {
+        <div class="game-card border p-4 rounded mb-4 shadow">
+            <h4 class="text-lg font-semibold capitalize">{{ summary.game }}</h4>
+            <p>Recent Score: <strong>{{ summary.recentScore }}%</strong></p>
+            <p>Average Score: <strong>{{ summary.averageScore }}%</strong></p>
+            <p>Best Score: <strong>{{ summary.bestScore }}%</strong></p>
+
+            <p>Times Played: {{ summary.timesPlayed }}</p>
+
+            @if (summary.badges && summary.badges.length > 0) {
+            <p>Badges:
+                @for (game of summary.badges; track $index) {
+                <span class="badge inline-block bg-yellow-300 px-2 py-1 rounded-full text-sm mr-2">
+                    {{ game }}
+                </span>
+                }
+            </p>
+            }
+        </div>
+        }
+
+    </section>
+</div>

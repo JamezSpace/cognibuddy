@@ -32,6 +32,7 @@ export class AuthComponent {
         { name: 'Parent', value: 'parent' },
         { name: 'Admin', value: 'admin' }
     ];
+    age_group_signup = this.age_groups.filter(group => group.value !== 'child');
 
     signupFormGroup = new FormGroup({
         full_name: new FormControl('', Validators.required),

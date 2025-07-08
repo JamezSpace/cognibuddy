@@ -1,4 +1,15 @@
-<div class="emotion-game">
+<div class="emotion-game relative flex flex-col items-center justify-center p-5 pt-8">
+    <button class="text-4xl absolute left-15 top-5" (click)="goBack()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
+            <rect width="512" height="512" fill="none" />
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="20"
+                d="M249.38 336L170 256l79.38-80m-68.35 80H342" />
+            <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="20"
+                d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192s192-86 192-192Z" />
+        </svg>
+    </button>
+
+
     <h2>🧠 Emotion Match</h2>
     @if (!completed) {
     <p>Match each emotion word with the correct face!</p>
@@ -10,12 +21,16 @@
         @for (card of cards; track $index) {
         <div class="card" [class.flipped]="card.flipped || card.matched" (click)="flipCard(card)">
             <div class="front">{{ card.type === 'image' ? card.value : card.value }}</div>
-            <div class="back">❓</div>
+            @if (card.type !== 'image') {
+                <div class="back ml-0.5">?</div>
+            }
         </div>
         }
     </div>
 
     <div class="controls">
-        <button (click)="resetGame()">🔁 Restart</button>
+        <button (click)="resetGame()" class="mt-2.5 cogni-button secondary" [disabled]="!completed">
+            Play Again
+        </button>
     </div>
 </div>

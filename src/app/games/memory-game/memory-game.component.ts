@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Card } from '../../interfaces/card.interface';
 import { environment } from '../../../environments/environment';
 import { ChildDashboardService } from '../../services/child/child-dashboard.service';
@@ -10,15 +10,18 @@ import { Router } from '@angular/router';
     templateUrl: './memory-game.component.html',
     styleUrl: './memory-game.component.css'
 })
-export class MemoryGameComponent {
+export class MemoryGameComponent implements OnInit {
     private access_token = localStorage.getItem('access_token');
     private childDashboardService: ChildDashboardService
 
-    constructor(childDashboardService: ChildDashboardService, private router: Router) {
+    constructor(childDashboardService: ChildDashboardService) {
         this.childDashboardService = childDashboardService;
     }
 
-
+    get goBack() {
+        return this.childDashboardService.goBack.bind(this.childDashboardService);
+    }
+    
     cards: Card[] = [];
     flippedCards: Card[] = [];
     lockBoard = false;
@@ -28,15 +31,16 @@ export class MemoryGameComponent {
     gameOver = false;
 
     images = [
-        '🍎', '🍌', '🍇', '🍓', '🍍', '🥝'
+        'berry.png',
+        'banana.png',
+        'tomato.png',
+        'watermelon.png',
+        'pineapple.png',
+        'kiwi.png',
     ];
 
     ngOnInit() {
         this.initializeGame();
-    }
-
-    goBack() {
-        this.router.navigate(['/dashboard/child']);
     }
 
     initializeGame() {

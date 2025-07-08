@@ -6,7 +6,9 @@ export interface GameHistory {
 
 export interface GameSummary {
   game: string;
-  latestScore: number;
+  recentScore: number;
   averageScore: number;
+  bestScore: number;
+  timesPlayed: number;
   badges: string[];
 }

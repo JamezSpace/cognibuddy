@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ChildDashboardService } from '../../services/child/child-dashboard.service';
 import { environment } from '../../../environments/environment';
 import { GameHistory, GameSummary } from '../../interfaces/games.interface';
 import { ChartConfiguration, ChartType } from 'chart.js';
+import { GamesComponent } from "../../components/games/games.component";
 
 @Component({
     selector: 'child-dashboard-homepage',
-    imports: [RouterModule],
+    imports: [RouterModule, GamesComponent],
     templateUrl: './child-dashboard-homepage.component.html',
     styleUrl: './child-dashboard-homepage.component.css'
 })
@@ -26,13 +27,7 @@ export class ChildDashboardHomepageComponent implements OnInit {
         return this.childDashboardService._id;
     }
 
-    games = [
-        { name: 'Memory Game', route: 'games/memory-game', img: 'memory.jpg', description: 'Play games that challenge your mind and improve cognitive skills.' },
-        { name: 'Number Trail', route: 'games/number-trail', img: 'number.png', description: 'Test your math skills in a fun way!' },
-        { name: 'Emotion Match', route: 'games/emotion-match', img: 'emotion.jpg', description: 'Learn about emotions by matching them with faces.' }
-    ];
-
-    summaries: GameSummary[] = [];
+    summaries = signal<GameSummary[]>([]);
 
     async ngOnInit() {
         await this.fetchGameSummary();
@@ -45,8 +40,10 @@ export class ChildDashboardHomepageComponent implements OnInit {
             });
 
             const result = await res.json();
+            console.log("game data", result);
+            
             if (result.status === 'success') {
-                this.summaries = result.data;
+                this.summaries.set(result.data);
             }
         } catch (err) {
             console.error('Failed to fetch summary', err);
