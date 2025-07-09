@@ -24,6 +24,9 @@
                     <th>Email</th>
                     <th>Role</th>
                     <th>Parent Id</th>
+                    <th>Email Verified</th>
+                    <th>Email Token (exists for unverified users)</th>
+                    <th>Token Expiration</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,6 +36,9 @@
                     <td>{{ user.email || 'null' }}</td>
                     <td>{{ user.role || 'null' }}</td>
                     <td>{{ user.parent_id || 'null' }}</td>
+                    <td>{{ user.verified || true }}</td>
+                    <td>{{ user.emailToken || 'null' }}</td>
+                    <td>{{ user.emailTokenExpires || 'null' }}</td>
                 </tr>
                 }
             </tbody>

@@ -6,6 +6,9 @@ export interface User {
     age?: number;          
     parent_id?: string;    
     createdAt?: string;    
-    updatedAt?: string;    
+    updatedAt?: string;   
+    verified?: boolean; 
+    emailToken? : string
+    emailTokenExpires? :string;
 }
 
