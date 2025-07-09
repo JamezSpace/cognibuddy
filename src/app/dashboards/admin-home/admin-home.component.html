@@ -3,7 +3,8 @@
 
     <section class="cogni-flex justify-between mb-4">
         <div class="field">
-            <input type="text" placeholder="Search by name/email" [(ngModel)]="searchTerm" (input)="filterUsers()" class="field-input" />
+            <input type="text" placeholder="Search by name/email" [(ngModel)]="searchTerm" (input)="filterUsers()"
+                class="field-input" />
 
         </div>
 
@@ -15,24 +16,26 @@
         </select>
     </section>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Parent Id</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (user of users(); track user._id) {
-            <tr>
-                <td>{{ user.name || 'null'}}</td>
-                <td>{{ user.email || 'null' }}</td>
-                <td>{{ user.role || 'null' }}</td>
-                <td>{{ user.parent_id || 'null' }}</td>
-            </tr>
-            }
-        </tbody>
-    </table>
+    <div class="overflow-x-auto">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Parent Id</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (user of filteredUsers(); track user._id) {
+                <tr>
+                    <td>{{ user.name || 'null'}}</td>
+                    <td>{{ user.email || 'null' }}</td>
+                    <td>{{ user.role || 'null' }}</td>
+                    <td>{{ user.parent_id || 'null' }}</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

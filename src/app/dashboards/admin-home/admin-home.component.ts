@@ -13,6 +13,7 @@ export class AdminHomeComponent {
     constructor(private adminService: AdminDashboardService) { }
 
     users = signal<User[]>([]);
+    filteredUsers = signal<User[]>([]);
 
     ngOnInit() {
         this.loadUsers();
@@ -22,6 +23,7 @@ export class AdminHomeComponent {
         const data = await this.adminService.getAllUsers();
 
         this.users.set(data);
+        this.filteredUsers.set(data)
     }
 
     searchTerm = signal('');
@@ -31,7 +33,7 @@ export class AdminHomeComponent {
         const search = this.searchTerm().toLowerCase();
         const role = this.selectedRole();
 
-        const filtered = this.users().filter(user => {
+        const result = this.filteredUsers().filter(user => {
             const matchesRole = !role || user.role === role;
             const matchesSearch = !search || (
                 user.name?.toLowerCase().includes(search) ||
@@ -40,6 +42,7 @@ export class AdminHomeComponent {
             return matchesRole && matchesSearch;
         });
 
-        this.users.set(filtered);
+        this.filteredUsers.set(result);
     }
+
 }
