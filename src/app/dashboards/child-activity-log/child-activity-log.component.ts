@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ParentDashboardService } from '../../services/parent/parent-dashboard.service';
 
 @Component({
@@ -7,10 +7,14 @@ import { ParentDashboardService } from '../../services/parent/parent-dashboard.s
   templateUrl: './child-activity-log.component.html',
   styleUrl: './child-activity-log.component.css'
 })
-export class ChildActivityLogComponent {
+export class ChildActivityLogComponent implements OnInit {
     constructor(private parentDashboardService: ParentDashboardService) {}
 
     get activityLog () {
-        return this.parentDashboardService.activityLog();
+        return this.parentDashboardService.activityLog()    
+    }
+
+    async ngOnInit(): Promise<void> {
+        await this.parentDashboardService.fetchActivityLog();
     }
 }

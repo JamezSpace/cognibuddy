@@ -29,8 +29,7 @@ export class AuthComponent {
     login_step = signal(1);
     age_groups = [
         { name: 'Child', value: 'child' },
-        { name: 'Parent', value: 'parent' },
-        { name: 'Admin', value: 'admin' }
+        { name: 'Parent', value: 'parent' }
     ];
     age_group_signup = this.age_groups.filter(group => group.value !== 'child');
 

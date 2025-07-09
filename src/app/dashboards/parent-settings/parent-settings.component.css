@@ -1,0 +1,12 @@
+.field {
+    margin-bottom: 15px;
+}
+
+.field-input {
+    border: 1px solid #000;
+    padding: 10px 15px;
+}
+
+.field-input::placeholder {
+    opacity: 0.7;
+}

@@ -21,7 +21,7 @@ export class MemoryGameComponent implements OnInit {
     get goBack() {
         return this.childDashboardService.goBack.bind(this.childDashboardService);
     }
-    
+
     cards: Card[] = [];
     flippedCards: Card[] = [];
     lockBoard = false;
@@ -39,7 +39,18 @@ export class MemoryGameComponent implements OnInit {
         'kiwi.png',
     ];
 
-    ngOnInit() {
+
+    async ngOnInit() {
+        const currentGame = 'memory';
+        const result = await this.childDashboardService.checkGameAccess(currentGame);
+
+        if (!result.allowed) {
+            alert(result.reason || 'Access denied.');
+            this.childDashboardService.goBack();
+            return;
+        }
+
+
         this.initializeGame();
     }
 

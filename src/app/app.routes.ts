@@ -13,6 +13,8 @@ import { EmotionMatchComponent } from './games/emotion-match/emotion-match.compo
 import { GamesComponent } from './components/games/games.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { AuthStatusComponent } from './components/auth-status/auth-status.component';
+import { ChildActivityLogComponent } from './dashboards/child-activity-log/child-activity-log.component';
+import { ParentSettingsComponent } from './dashboards/parent-settings/parent-settings.component';
 
 export const routes: Routes = [
     {
@@ -28,10 +30,6 @@ export const routes: Routes = [
         component: AuthStatusComponent
     },
     {
-        path: 'activity',
-        loadChildren: () => import('./dashboards/child-activity-log/child-activity-log.component').then(m => m.ChildActivityLogComponent)
-    },
-    {
         path: 'dashboard/parent',
         component: ParentComponent,
         canActivate: [authGuard],
@@ -44,6 +42,14 @@ export const routes: Routes = [
             {
                 path: 'children',
                 component: MyChildrenComponent
+            },
+            {
+                path: 'activity',
+                component: ChildActivityLogComponent
+            },
+            {
+                path: 'settings',
+                component: ParentSettingsComponent
             }
         ]
     },

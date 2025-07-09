@@ -30,7 +30,17 @@ export class EmotionMatchComponent implements OnInit {
     score = 0;
     completed = false;
 
-    ngOnInit() {
+
+    async ngOnInit() {
+        const currentGame = 'emotion-match';
+        const result = await this.childDashboardService.checkGameAccess(currentGame);
+
+        if (!result.allowed) {
+            alert(result.reason || 'Access denied.');
+            this.childDashboardService.goBack();
+            return;
+        }
+
         this.setupGame();
     }
 

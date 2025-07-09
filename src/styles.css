@@ -26,6 +26,10 @@ textarea {
     outline: none;
 }
 
+select {
+    outline: none;
+}
+
 button {
     cursor: pointer;
 }

@@ -41,10 +41,12 @@ export class ParentDashboardService {
 
     async fetchActivityLog(): Promise<void> {
         try {
-            const res = await fetch(`${environment.backend.base_url}/dashboard/parent/activity-log`, {
+            const res = await fetch(`${environment.backend.base_url}/dashboard/parent/child-activity-log`, {
                 headers: { Authorization: `Bearer ${this.accessToken}` }
             });
 
+            console.log('in here');
+            
             const result = await res.json();
             if (result.status === 'success') {
                 this.activityLog.set(result.data);
@@ -86,7 +88,6 @@ export class ParentDashboardService {
         );
     }
 
-
     async deleteChild(childId: string): Promise<void> {
         try {
             const response = await fetch(`${environment.backend.base_url}/users/children/${childId}`, {
@@ -106,6 +107,28 @@ export class ParentDashboardService {
         } catch (error) {
             console.error('Error deleting child:', error);
         }
+    }
+
+    async setGameLimit(childId: string, limitData: { restricted_games: string[]; session_limit: number | null }) {
+        const res = await fetch(`${environment.backend.base_url}/limits`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.accessToken}`
+            },
+            body: JSON.stringify({ child_id: childId, ...limitData })
+        });
+        return res.json();
+    }
+
+    async fetchGameLimit(childId?: string) {
+        const url = childId
+            ? `${environment.backend.base_url}/games/limits/${childId}`
+            : `${environment.backend.base_url}/games/limits`;
+        const res = await fetch(url, {
+            headers: { Authorization: `Bearer ${this.accessToken}` }
+        });
+        return res.json();
     }
 
 }

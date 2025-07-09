@@ -1,0 +1,37 @@
+<h1 class="mt-5 mb-3.5">Settings</h1>
+<h2 class="mb-1.5">Game Limits</h2>
+<div class="px-3.5 max-sm:px-1.5">
+    <p class="cogni-flex gap-2.5 mb-2.5">
+        <span>Set game restrictions for</span>
+        <select class="px-5 py-1.5 border" (change)="childSelected($event)">
+            <option value="">- -</option>
+            @for (child of children; track child._id) {
+            <option value="{{ child._id }}" class="capitalize px-3.5">{{ child.name }}
+            </option>
+            }
+        </select>
+    </p>
+    <form [formGroup]="limitForm">
+        <div class="field">
+            <label class="block mb-1.5">Set a limit to the number of plays daily</label>
+            <input type="number" formControlName="session_limit" min="1" placeholder="e.g 2" class="field-input" />
+        </div>
+
+
+        <label class="block mb-1.5">Restricted Games</label>
+        @for (game of allGames; track $index) {
+        <label class="cogni-flex gap-3.5 mb-1.5" [htmlFor]="game">
+            <input type="checkbox" class="w-6 h-6" [id]="game" [value]="game" (change)="toggleGameRestriction(game, $event)" /> 
+            <span class="capitalize">{{ game }}</span>
+        </label>
+        }
+
+        <button class="cogni-button mt-5 w-1/2 max-sm:w-full" type="button">
+            @if (limitSaved()) {
+                Limit Saved!
+            } @else {
+                Save
+            }
+        </button>
+    </form>
+</div>

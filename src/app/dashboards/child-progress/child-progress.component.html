@@ -27,7 +27,7 @@
             <h4 class="text-lg font-semibold capitalize">{{ summary.game }}</h4>
             <p>Recent Score: <strong>{{ summary.recentScore }}%</strong></p>
             <p>Average Score: <strong>{{ summary.averageScore }}%</strong></p>
-            <p>Best Score: <strong>{{ summary.bestScore }}%</strong></p>
+            <p>Best Score: <strong>{{ summary.bestScore || '-' }}%</strong></p>
 
             <p>Times Played: {{ summary.timesPlayed }}</p>
 

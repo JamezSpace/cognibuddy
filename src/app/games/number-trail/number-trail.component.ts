@@ -23,8 +23,17 @@ export class NumberTrailComponent implements OnInit {
     get goBack() {
         return this.childDashboardService.goBack.bind(this.childDashboardService);
     }
-    
-    ngOnInit() {
+
+    async ngOnInit() {
+        const currentGame = 'number-trail';
+        const result = await this.childDashboardService.checkGameAccess(currentGame);
+
+        if (!result.allowed) {
+            alert(result.reason || 'Access denied.');
+            this.childDashboardService.goBack();
+            return;
+        }
+
         this.resetGame();
     }
 

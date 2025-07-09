@@ -78,7 +78,8 @@
                         </div>
                         <div class="field">
                             <label for="confirm-password">Confirm Password</label>
-                            <input type="password" placeholder="re-type your password" id="confirm-password" (blur)="pickValue($event)" />
+                            <input type="password" placeholder="re-type your password" id="confirm-password"
+                                (blur)="pickValue($event)" />
 
                             @if (invalidPassword()) {
                             <mat-error>Passwords do not match!</mat-error>
@@ -130,9 +131,10 @@
                 <div class="field">
                     <label for="login-pin">Enter your 4-digit PIN</label>
                     <input type="text" inputmode="numeric" maxlength="4" id="login-pin" formControlName="password"
-                        (keydown)="allowOnlyNumbers($event)" placeholder="type the 4-digit PIN your parent set" required />
+                        (keydown)="allowOnlyNumbers($event)" placeholder="type the 4-digit PIN your parent set"
+                        required />
 
-                        @if (!loginError().valid && loginError().message === 'Invalid password') {
+                    @if (!loginError().valid && loginError().message === 'Invalid password') {
                     <mat-error>Invalid password!</mat-error>
                     }
                 </div>
@@ -143,15 +145,27 @@
                     <label for="login-email">Email</label>
                     <input type="email" id="login-email" formControlName="email" required />
 
-                    @if (!loginError().valid && loginError().message === 'User not found') {
+                    @if (loginFormGroup.controls.email.touched &&
+                    loginFormGroup.controls.email.hasError('required')) {
+                    <mat-error>This field cannot be empty</mat-error>
+                    }
+                    @else if (!loginError().valid && loginError().message === 'User not found') {
                     <mat-error>Email doesn't exist!</mat-error>
+                    }
+                    @else if (loginFormGroup.controls.email.touched &&
+                    loginFormGroup.controls.email.hasError('email')) {
+                    <mat-error>Enter a valid email!</mat-error>
                     }
                 </div>
                 <div class="field">
                     <label for="login-password">Password</label>
                     <input type="password" id="login-password" formControlName="password" required />
 
-                        @if (!loginError().valid && loginError().message === 'Invalid password') {
+                    @if (loginFormGroup.controls.password.touched &&
+                    loginFormGroup.controls.password.hasError('required')) {
+                    <mat-error>This field cannot be empty</mat-error>
+                    }
+                    @else if (!loginError().valid && loginError().message === 'Invalid password') {
                     <mat-error>Invalid password!</mat-error>
                     }
                 </div>
