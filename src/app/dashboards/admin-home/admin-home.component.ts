@@ -27,11 +27,19 @@ export class AdminHomeComponent {
     searchTerm = signal('');
     selectedRole = signal('');
 
-    async filterUsers() {
-        const users = await this.adminService.getFilteredUsers(
-            this.searchTerm(),
-            this.selectedRole()
-        );
-        this.users.set(users);
+    filterUsers() {
+        const search = this.searchTerm().toLowerCase();
+        const role = this.selectedRole();
+
+        const filtered = this.users().filter(user => {
+            const matchesRole = !role || user.role === role;
+            const matchesSearch = !search || (
+                user.name?.toLowerCase().includes(search) ||
+                user.email?.toLowerCase().includes(search)
+            );
+            return matchesRole && matchesSearch;
+        });
+
+        this.users.set(filtered);
     }
 }
