@@ -1,0 +1,38 @@
+<div class="px-5 mt-5">
+    <h2 class="mb-2">All Users</h2>
+
+    <section class="filters mb-4">
+        <div class="field">
+            <input type="text" placeholder="Search by name/email" [(ngModel)]="searchTerm" (input)="filterUsers()" class="field-input" />
+
+        </div>
+
+        <select [(ngModel)]="selectedRole" (change)="filterUsers()" class="px-5 py-1.5 border">
+            <option value="">All Roles</option>
+            <option value="parent">Parent</option>
+            <option value="child">Child</option>
+            <option value="admin">Admin</option>
+        </select>
+    </section>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Parent Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (user of users(); track user._id) {
+            <tr>
+                <td>{{ user.name || 'null'}}</td>
+                <td>{{ user.email || 'null' }}</td>
+                <td>{{ user.role || 'null' }}</td>
+                <td>{{ user.parent_id || 'null' }}</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

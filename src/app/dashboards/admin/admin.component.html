@@ -1,7 +1,9 @@
 <app-nav-bar 
     [navs]="[
-        { label: 'Home', route: '/' },
+        { label: 'Home', route: '/dashboard/admin' },
         { label: 'Parents', route: '/parents' },
         { label: 'Children', route: '/children' }
     ]"
 />
+
+<router-outlet></router-outlet>

@@ -15,6 +15,7 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
 import { AuthStatusComponent } from './components/auth-status/auth-status.component';
 import { ChildActivityLogComponent } from './dashboards/child-activity-log/child-activity-log.component';
 import { ParentSettingsComponent } from './dashboards/parent-settings/parent-settings.component';
+import { AdminHomeComponent } from './dashboards/admin-home/admin-home.component';
 
 export const routes: Routes = [
     {
@@ -89,6 +90,12 @@ export const routes: Routes = [
         path: 'dashboard/admin',
         component: AdminComponent,
         canActivate: [authGuard],
-        data: { roles: ['admin'] }
+        data: { roles: ['admin'] },
+        children: [
+            {
+                path: '',
+                component: AdminHomeComponent
+            }
+        ]
     }
 ];
