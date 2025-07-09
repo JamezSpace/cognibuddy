@@ -130,7 +130,6 @@ export class AuthComponent {
             return;
         }
 
-        // Here you would typically send the user data to your backend for registration
         console.log('User registered:', this.signupFormGroup.value);
 
         this.loading.set(true);
@@ -141,13 +140,14 @@ export class AuthComponent {
             password: this.signupFormGroup2.value.password || '',
             role: this.signupFormGroup.value.age_group || ''
         });
-
+        
         if (response.userId) {
             this.loading.set(false);
-            this.router.navigate(['/auth/login']);
-        } else {
+            this.router.navigate(['/auth-status']);
+
+        } else if (response.message === 'Conflict') {
             this.loading.set(false);
-            alert('An error occurred while registering. Please try again.');
+            alert('Email exists already!');
             return;
         }
     }

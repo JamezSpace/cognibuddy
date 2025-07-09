@@ -1,6 +1,7 @@
 import { Injectable, signal, Signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Child } from '../../interfaces/child.interface';
+import { ActivityLog } from '../../interfaces/activity-log.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -10,6 +11,7 @@ export class ParentDashboardService {
     constructor() { }
 
     children = signal<Child[]>([])
+    activityLog = signal<ActivityLog[]>([]);
     private accessToken: string = localStorage.getItem('access_token') || '';
 
     async fetchChildren(): Promise<void> {
@@ -37,6 +39,20 @@ export class ParentDashboardService {
         }
     }
 
+    async fetchActivityLog(): Promise<void> {
+        try {
+            const res = await fetch(`${environment.backend.base_url}/dashboard/parent/activity-log`, {
+                headers: { Authorization: `Bearer ${this.accessToken}` }
+            });
+
+            const result = await res.json();
+            if (result.status === 'success') {
+                this.activityLog.set(result.data);
+            }
+        } catch (err) {
+            console.error('Failed to fetch activity log:', err);
+        }
+    }
 
     async addChild(childData: any): Promise<void> {
         try {

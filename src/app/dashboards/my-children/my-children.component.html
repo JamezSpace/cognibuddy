@@ -1,33 +1,37 @@
 <div class="cogni-flex flex-wrap gap-3 mt-7.5">
     @for (child of children; track $index) {
-    <div class="relative flex max-w-[400px] w-full flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md p-5">
-        <div class="first-row cogni-flex mb-2.5 gap-3">
-            <div class="avatar-container w-8 p-1.5 rounded-full bg-gray-200 cogni-flex justify-center">
-                <img src="user.png" alt="Child Avatar" class="avatar" />
+    <div
+        class="relative flex max-w-[400px] w-full flex-col rounded-xl bg-white bg-clip-border text-black custom-box-shadow p-5">
+        <div class="first-row mb-2.5">
+            <div class="cogni-flex gap-3">
+                <div class="avatar-container w-7 p-1.5 rounded-full bg-gray-200 cogni-flex justify-center">
+                    <img src="user.png" alt="Child Avatar" class="avatar" />
+                </div>
+                <h2 class="capitalize text-3xl">{{ child.name }}</h2>
             </div>
-            <h2 class="capitalize">{{ child.name }}</h2>
-        </div>
-        <div class="second-row cogni-flex gap-8">
-            <div class="stat">
-                <p class="num">{{ child.games_played || 0 }}</p>
-                <p class="description">games played</p>
+            <p class="font-bold my-3">Username: {{ child.username }}</p>
+            <div class="second-row cogni-flex gap-10 ">
+                <div class="stat">
+                    <p class="num">{{ child.games_played || 0 }}</p>
+                    <p class="description">games played</p>
+                </div>
+                <div class="stat">
+                    <p class="num">{{ child.badges || 0 }}</p>
+                    <p class="description">badges won</p>
+                </div>
             </div>
-            <div class="stat">
-                <p class="num">{{ child.badges || 0 }}</p>
-                <p class="description">badges won</p>
+            <div class="mt-5 cogni-flex justify-between">
+                <button type="button" class="select-none rounded-lg cogni-button secondary"
+                    (click)="deleteChild(child)">
+                    Delete Child
+                </button>
+                <button class="cogni-button" (click)="editChild(child)">Edit Child</button>
             </div>
-        </div>
-        <div class="mt-5 cogni-flex justify-between">
-            <button type="button"
-                class="select-none rounded-lg cogni-button secondary" (click)="deleteChild(child)">
-                Delete Child
-            </button>
-            <button class="cogni-button" (click)="editChild(child)">Edit Child</button>
         </div>
     </div>
     }
 
-    <button class="card fixed-size-card shadow-md p-5" (click)="addChildProfile()">
+    <button class="card fixed-size-card custom-box-shadow p-5" (click)="addChildProfile()">
         <mat-icon aria-hidden="false" aria-label="add child profile icon" fontIcon="person_add"></mat-icon>
         <p class="">Add Child Profile</p>
     </button>

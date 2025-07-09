@@ -2,8 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ChildDashboardService } from '../../services/child/child-dashboard.service';
 import { environment } from '../../../environments/environment';
-import { GameHistory, GameSummary } from '../../interfaces/games.interface';
-import { ChartConfiguration, ChartType } from 'chart.js';
+import { GameSummary } from '../../interfaces/games.interface';
 import { GamesComponent } from "../../components/games/games.component";
 
 @Component({

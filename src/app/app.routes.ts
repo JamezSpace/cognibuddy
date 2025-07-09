@@ -11,11 +11,25 @@ import { ChildDashboardHomepageComponent } from './dashboards/child-dashboard-ho
 import { NumberTrailComponent } from './games/number-trail/number-trail.component';
 import { EmotionMatchComponent } from './games/emotion-match/emotion-match.component';
 import { GamesComponent } from './components/games/games.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { AuthStatusComponent } from './components/auth-status/auth-status.component';
 
 export const routes: Routes = [
     {
         path: 'auth',
         component: AuthComponent
+    },
+    {
+        path: 'verify-email',
+        component: VerifyEmailComponent
+    },
+    {
+        path: 'auth-status',
+        component: AuthStatusComponent
+    },
+    {
+        path: 'activity',
+        loadChildren: () => import('./dashboards/child-activity-log/child-activity-log.component').then(m => m.ChildActivityLogComponent)
     },
     {
         path: 'dashboard/parent',

@@ -1,0 +1,11 @@
+<h2 class="text-xl font-bold mb-4">📋 Activity Log</h2>
+@for (activity of activityLog; track $index) {
+<div>
+    <p>
+        <strong>{{ activity.child_name }}</strong> played
+        <strong class="capitalize">{{ activity.game }}</strong> on
+        <em>{{ activity.date_played }}</em> –
+        Score: <strong>{{ activity.score }}%</strong>
+    </p>
+</div>
+}

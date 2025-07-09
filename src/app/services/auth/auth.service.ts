@@ -22,13 +22,14 @@ export class AuthService {
             });
 
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(response.statusText);
             }
 
             const data = await response.json();
             return data
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error during sign up:', error);
+            return { userId: null, message: error.message };
         }
     }
 
