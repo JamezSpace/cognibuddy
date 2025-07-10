@@ -43,8 +43,9 @@ export class MyChildrenComponent implements OnInit {
         const dialogRef = this.dialog.open(DeletePersonComponent, {
             data: {
                 id: child._id,
-                person: 'child',
+                role: 'child',
                 name: child.name,
+                triggerRole: 'parent'
             }
         });
 

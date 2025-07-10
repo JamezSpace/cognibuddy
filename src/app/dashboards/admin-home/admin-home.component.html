@@ -20,6 +20,7 @@
         <table>
             <thead>
                 <tr>
+                    <th>id</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Role</th>
@@ -32,6 +33,7 @@
             <tbody>
                 @for (user of filteredUsers(); track user._id) {
                 <tr>
+                    <td>{{ user._id }}</td>
                     <td>{{ user.name || 'null'}}</td>
                     <td>{{ user.email || 'null' }}</td>
                     <td>{{ user.role || 'null' }}</td>
@@ -39,9 +41,27 @@
                     <td>{{ user.verified || true }}</td>
                     <td>{{ user.emailToken || 'null' }}</td>
                     <td>{{ user.emailTokenExpires || 'null' }}</td>
+                    <td>
+                        <button matIconButton [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu" class="custom-box-shadow">
+                            <button mat-menu-item
+                                (click)="editUser(user)" 
+                                class="hover:underline hover:underline-offset-5">
+                                Edit
+                            </button>
+                            <button mat-menu-item
+                                (click)="deleteUser(user)" 
+                                class="hover:underline hover:underline-offset-5">
+                                Delete
+                            </button>
+                        </mat-menu>
+                    </td>
                 </tr>
                 }
             </tbody>
         </table>
+        <button (click)="exportToPDF()" class="cogni-button mt-10">Export to PDF</button>`
     </div>
 </div>

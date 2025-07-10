@@ -1,12 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ChildDashboardService } from '../../services/child/child-dashboard.service';
+import { User } from '../../interfaces/users.interface';
+import { AdminDashboardService } from '../../services/admin/admin-dashboard.service';
 import { ParentDashboardService } from '../../services/parent/parent-dashboard.service';
 
-export interface DialogData {
-    person: string; // Type of person, e.g., 'child', 'parent'
-    name: string; // Name of the person to be deleted
-    id: string; // ID of the person to be deleted
+export interface UserWithTriggerRole extends User{
+    triggerRole: string;
 }
 
 @Component({
@@ -19,9 +18,11 @@ export class DeletePersonComponent {
     // This component is used to confirm deletion of a person (child)
     // It can be extended to handle different types of persons if needed
 
-    constructor(private parentDashboardService: ParentDashboardService) { }
+    constructor(
+        private parentDashboardService: ParentDashboardService, 
+        private adminDashboardService: AdminDashboardService) { }
 
-    readonly data = inject<DialogData>(MAT_DIALOG_DATA);
+    readonly data = inject<UserWithTriggerRole>(MAT_DIALOG_DATA);
     readonly dialogRef = inject(MatDialogRef<DeletePersonComponent>);
 
     onNoClick(): void {
@@ -29,17 +30,21 @@ export class DeletePersonComponent {
     }
 
     async deletePerson(): Promise<void> {
-        if (this.data.person === 'child') {
+        if (this.data.triggerRole === 'admin') {
             try {
-                await this.parentDashboardService.deleteChild(this.data.id);
+                await this.adminDashboardService.deleteUser(this.data._id);
+                console.log(`User ${this.data.name} deleted successfully`);
+            } catch (error) {
+                console.error('Error deleting user:', error);
+            }
+        } else if (this.data.triggerRole === 'parent') {
+            try {
+                await this.parentDashboardService.deleteChild(this.data._id);
                 console.log(`Child ${this.data.name} deleted successfully`);
             } catch (error) {
                 console.error('Error deleting child:', error);
             }
-        } else if (this.data.person === 'parent') {
-            // Logic to delete parent can be added here
-            console.log(`Parent ${this.data.name} deletion logic not implemented yet`);
-        }
+        } 
 
         this.onNoClick()
     }

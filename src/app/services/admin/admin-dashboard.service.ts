@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
+import { User } from '../../interfaces/users.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -29,7 +30,7 @@ export class AdminDashboardService {
 
         try {
             const response = await fetch(`${environment.backend.base_url}/admin/users?${query}`, {
-            headers: { Authorization: `Bearer ${this.access_token}` }
+                headers: { Authorization: `Bearer ${this.access_token}` }
             });
             const res = await response.json();
             return res.data;
@@ -39,5 +40,40 @@ export class AdminDashboardService {
         }
     }
 
+    async updateUser(id: string, data: Partial<User>) {
+        try {
+            const response = await fetch(`${environment.backend.base_url}/admin/users/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.access_token}`
+                },
+                body: JSON.stringify(data)
+            })
 
+            const response_data = await response.json()
+            return response_data
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
+
+    async deleteUser(id: string) {
+        try {
+            const response = await fetch(`${environment.backend.base_url}/admin/users/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.access_token}`
+                }
+            })
+
+            const response_data = await response.json()
+            return response_data
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
 }

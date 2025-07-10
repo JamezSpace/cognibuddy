@@ -79,6 +79,12 @@ h2 {
     &:focus {
         outline: 1px solid #333;
     }
+
+    &.red {
+        background-color: var(--color-red-500);
+        border-color: var(--color-red-500);
+        color: white;
+    }
 }
 
 .cogni-button.secondary {
@@ -87,6 +93,11 @@ h2 {
 
     &:hover {
         outline: 1px solid #000;
+    }
+
+    &.red {
+        border-color: var(--color-red-500);
+        color: var(--color-red-500);
     }
 }
 

@@ -1,0 +1,30 @@
+<div class="p-10 w-full">
+    <h2 class="mb-3.5">Edit User</h2>
+    <form [formGroup]="editUserForm">
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" type="text" />
+        </mat-form-field>
+
+        @if (editUserForm.get('email')) {
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email" />
+        </mat-form-field>
+        }
+
+        <div class="field">
+            <label>Role</label>
+            <select formControlName="role" class="border py-2.5 px-5">
+                <option value="admin">Admin</option>
+                <option value="parent">Parent</option>
+                <option value="child">Child</option>
+            </select>
+        </div>
+
+        <div class="mt-8.5 cogni-flex justify-between">
+            <button type="button" (click)="cancel()" class="cogni-button secondary">Cancel</button>
+            <button type="button" (click)="submit()" class="cogni-button">Save</button>
+        </div>
+    </form>
+</div>
