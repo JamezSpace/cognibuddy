@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Optional } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { ChildDashboardService } from '../../services/child/child-dashboard.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'number-trail',
@@ -17,11 +18,18 @@ export class NumberTrailComponent implements OnInit {
     completed = false;
     score = 0;
 
-    constructor(private childDashboardService: ChildDashboardService) { }
+    constructor(
+        private childDashboardService: ChildDashboardService,
+        @Optional() private dialogRef?: MatDialogRef<any>
+    ) { }
     private access_token: string | null = localStorage.getItem('access_token');
 
-    get goBack() {
-        return this.childDashboardService.goBack.bind(this.childDashboardService);
+    goBack() {
+        if (this.dialogRef) {
+            this.dialogRef.close(); // closes the dialog
+        }
+
+        this.childDashboardService.forceReload('/dashboard/child');
     }
 
     async ngOnInit() {
@@ -70,7 +78,7 @@ export class NumberTrailComponent implements OnInit {
     calculateScore() {
         const duration = (this.endTime - this.startTime) / 1000;
         this.score = Math.max(100 - Math.round(duration * 10), 0);
-        this.saveGameResult(); // 👈 Save to backend
+        this.saveGameResult();
     }
 
     async saveGameResult() {
@@ -84,7 +92,7 @@ export class NumberTrailComponent implements OnInit {
                 body: JSON.stringify({
                     score: this.score,
                     matches: 10,          // always 10 for number trail
-                    attempts: 10,         // same here
+                    attempts: 10,
                     date_played: new Date()
                 })
             });

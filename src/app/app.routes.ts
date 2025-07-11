@@ -16,6 +16,8 @@ import { AuthStatusComponent } from './components/auth-status/auth-status.compon
 import { ChildActivityLogComponent } from './dashboards/child-activity-log/child-activity-log.component';
 import { ParentSettingsComponent } from './dashboards/parent-settings/parent-settings.component';
 import { AdminHomeComponent } from './dashboards/admin-home/admin-home.component';
+import { PlayGameComponent } from './components/play-game/play-game.component';
+import { BlankComponent } from './components/blank/blank.component';
 
 export const routes: Routes = [
     {
@@ -65,10 +67,6 @@ export const routes: Routes = [
                 component: ChildDashboardHomepageComponent
             },
             {
-                path: 'games',
-                component: GamesComponent
-            },
-            {
                 path: 'games/memory-game',
                 component: MemoryGameComponent
             },
@@ -97,5 +95,11 @@ export const routes: Routes = [
                 component: AdminHomeComponent
             }
         ]
+    },
+    {
+        path: 'reload',
+        component: BlankComponent 
     }
+
+
 ];

@@ -1,21 +1,41 @@
 import { Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+
 
 @Injectable({
     providedIn: 'root'
 })
 export class ChildDashboardService {
 
-    constructor(private router: Router) { }
+    constructor(private router: Router, private dialog: MatDialog) { }
 
     readonly username: string = localStorage.getItem('user_name') || 'Child';
     readonly _id: string = localStorage.getItem('user_id') || '';
     private access_token = localStorage.getItem('access_token') || '';
 
-    goBack() {
-        this.router.navigate(['/dashboard/child']);
+    async forceReload(route: string) {
+        await this.router.navigateByUrl('/reload', { skipLocationChange: true });
+        await this.router.navigate([route]);
     }
+
+    goBack(): void {
+        if (this.dialog.openDialogs.length > 0) {
+            this.dialog.closeAll();
+
+            this.router.navigateByUrl('/reload', { skipLocationChange: true }).then(() => {
+                this.router.navigate(['/dashboard/child']);
+            });
+        } else {
+            this.router.navigateByUrl('/reload', { skipLocationChange: true }).then(() => {
+                this.router.navigate(['/dashboard/child']);
+            });
+        }
+    }
+
+
+
 
     restriction = signal<{ session_limit: number | null, restricted_games: string[] }>({ session_limit: null, restricted_games: [] });
 
@@ -38,8 +58,8 @@ export class ChildDashboardService {
         const restrictionResult = await res1.json();
         const { restricted_games = [], session_limit = null } = restrictionResult.data || {};
         console.log("Resticted games", restricted_games);
-        console.log("Game", game);        
-        
+        console.log("Game", game);
+
 
         // 2. Check if the game is restricted
         if (restricted_games.includes(game)) {
