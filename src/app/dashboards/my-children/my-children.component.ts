@@ -5,6 +5,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { AddChildComponent } from '../../components/add-child/add-child.component';
 import { ParentDashboardService } from '../../services/parent/parent-dashboard.service';
 import { DeletePersonComponent } from '../../components/delete-person/delete-person.component';
+import { ParentEditChildComponent } from '../../components/parent-edit-child/parent-edit-child.component';
 
 @Component({
     selector: 'my-children',
@@ -29,20 +30,27 @@ export class MyChildrenComponent implements OnInit {
         const dialogRef = this.dialog.open(AddChildComponent);
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
+            console.log('The dialog was closed', result);
         });
     }
 
     editChild(child: any): void {
-        // Navigate to edit form or open dialog
-        console.log('Edit child:', child);
-        // Example: this.router.navigate(['/edit-child', child.id]);
+        const dialogRef = this.dialog.open(ParentEditChildComponent, {
+            data: {
+                _id: child._id,
+                name: child.name,
+            }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
+        });
     }
 
     deleteChild(child: any): void {
         const dialogRef = this.dialog.open(DeletePersonComponent, {
             data: {
-                id: child._id,
+                _id: child._id,
                 role: 'child',
                 name: child.name,
                 triggerRole: 'parent'
@@ -52,8 +60,5 @@ export class MyChildrenComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
             console.log('The dialog was closed');
         });
-
-        console.log('Delete child:', child);
-        // Example: this.childService.deleteChild(child.id).subscribe(...)
     }
 }

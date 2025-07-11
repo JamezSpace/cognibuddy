@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { RoundedSquareComponent } from "../../components/rounded-square/rounded-square.component";
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ParentDashboardService } from '../../services/parent/parent-dashboard.service';
+import { ChildGameProgress } from '../../interfaces/games.interface';
 
 @Component({
     selector: 'parent-overview',
@@ -12,6 +13,7 @@ import { ParentDashboardService } from '../../services/parent/parent-dashboard.s
 export class ParentOverviewComponent implements OnInit {
     private username = localStorage.getItem('user_name');
     private user_id = localStorage.getItem('user_id');
+    progressData = signal<ChildGameProgress[]>([]);
 
     get name(): string {
         return this.username || '';
@@ -25,6 +27,8 @@ export class ParentOverviewComponent implements OnInit {
 
     async ngOnInit() {
         await this.parentDashboardService.fetchChildren();
+        const result = await this.parentDashboardService.getProgressSummary();
+        this.progressData.set(result);
     }
 
     get totalGamesPlayed(): number {
@@ -38,4 +42,5 @@ export class ParentOverviewComponent implements OnInit {
     // get minutesToday(): number {
     //     return this.children.reduce((total, child) => total + (child.minutes_today || 0), 0);
     // }
+    
 }

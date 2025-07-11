@@ -31,8 +31,7 @@ export class ChildDashboardService {
     }
 
     async checkGameAccess(game: string): Promise<{ allowed: boolean; reason?: string }> {
-        // 1. Fetch restrictions
-        const res1 = await fetch(`${environment.backend.base_url}/limits/${this._id}`, {
+        const res1 = await fetch(`${environment.backend.base_url}/games/limits/${this._id}`, {
             headers: { Authorization: `Bearer ${this.access_token}` }
         });
 

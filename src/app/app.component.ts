@@ -9,7 +9,7 @@ import { environment } from '../environments/environment';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements AfterViewInit {
-  title = 'cognibuddy';
+  title = 'Autism Game World';
 
   async ngAfterViewInit() {
     await fetch(`${environment.backend.base_url}`)

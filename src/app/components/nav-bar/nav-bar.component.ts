@@ -2,6 +2,7 @@ import { Component, inject, Input, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { environment } from '../../../environments/environment';
+import { LogoComponent } from "../logo/logo.component";
 
 
 interface NavItems {
@@ -11,7 +12,7 @@ interface NavItems {
 
 @Component({
     selector: 'app-nav-bar',
-    imports: [MatIconModule, RouterModule],
+    imports: [MatIconModule, RouterModule, LogoComponent],
     templateUrl: './nav-bar.component.html',
     styleUrl: './nav-bar.component.css'
 })

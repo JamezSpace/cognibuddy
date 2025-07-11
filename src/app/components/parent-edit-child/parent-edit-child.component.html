@@ -1,0 +1,20 @@
+<div class="p-10 w-full">
+    <h2 class="mb-3.5">Edit My Child</h2>
+    <form [formGroup]="editChildForm">
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" type="text" />
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>New Pin</mat-label>
+            <input type="text" matInput formControlName="newPin" />
+            <mat-hint>Only fill if you want to reset your child's pin</mat-hint>
+        </mat-form-field>
+
+        <div class="mt-8.5 cogni-flex justify-between">
+            <button type="button" (click)="cancel()" class="cogni-button secondary">Cancel</button>
+            <button type="button" (click)="editChild()" class="cogni-button">Save</button>
+        </div>
+    </form>
+</div>

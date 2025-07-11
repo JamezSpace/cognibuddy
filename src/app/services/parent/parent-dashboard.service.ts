@@ -1,4 +1,4 @@
-import { Injectable, signal, Signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Child } from '../../interfaces/child.interface';
 import { ActivityLog } from '../../interfaces/activity-log.interface';
@@ -46,7 +46,7 @@ export class ParentDashboardService {
             });
 
             console.log('in here');
-            
+
             const result = await res.json();
             if (result.status === 'success') {
                 this.activityLog.set(result.data);
@@ -73,9 +73,43 @@ export class ParentDashboardService {
 
             const data = await response.json();
             if (data.status === 'success') {
-                this.children.update(children => [...children, childData]);
+                this.children.update(children => [...children, { ...childData, username: data.username }]);
             } else {
                 console.error('Failed to add child:', data.message);
+            }
+        } catch (error) {
+            console.error('Error submitting child data:', error);
+        }
+    }
+
+    async editChild(childData: any): Promise<void> {
+        try {
+            console.log(childData);
+
+            const response = await fetch(`${environment.backend.base_url}/users/children/${childData._id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.accessToken}`
+                },
+                body: JSON.stringify(childData)
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            if (data.status === 'success') {
+                this.children.update(children =>
+                    children.map(child =>
+                        child._id === childData._id
+                            ? { ...child, ...childData, username: data.username }
+                            : child
+                    )
+                );
+            } else {
+                console.error('Failed to edit child:', data.message);
             }
         } catch (error) {
             console.error('Error submitting child data:', error);
@@ -129,6 +163,22 @@ export class ParentDashboardService {
             headers: { Authorization: `Bearer ${this.accessToken}` }
         });
         return res.json();
+    }
+
+    async getProgressSummary() {
+        try {
+            const response = await fetch(`${environment.backend.base_url}/games/parent/children/progress`, {
+                headers: { Authorization: `Bearer ${this.accessToken}` }
+            })
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json()
+            return data
+        } catch(error: any) {
+            console.error(error);   
+        }
     }
 
 }

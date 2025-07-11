@@ -49,8 +49,7 @@ export class AddChildComponent {
 
         // send to backend via service
         const response = await this.parentDashboardService.addChild(childData);
-        
-        this.onNoClick()
+        this.onNoClick();
     }
 
 }

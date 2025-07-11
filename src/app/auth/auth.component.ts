@@ -3,13 +3,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { Component, signal, computed, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
+import { Component, signal, computed, CUSTOM_ELEMENTS_SCHEMA, inject, Signal } from '@angular/core';
 import { AuthService } from '../services/auth/auth.service';
 import { Router } from '@angular/router';
+import { LogoComponent } from "../components/logo/logo.component";
 
 @Component({
     selector: 'app-auth',
-    imports: [MatIconModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatSelectModule],
+    imports: [MatIconModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatSelectModule, LogoComponent],
     templateUrl: './auth.component.html',
     styleUrl: './auth.component.css',
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -32,7 +33,15 @@ export class AuthComponent {
         { name: 'Parent', value: 'parent' },
         { name: 'Admin', value: 'admin' }
     ];
-    age_group_signup = this.age_groups.filter(group => group.value !== 'child');
+    excluded = ['child', 'admin'];
+    age_group_signup = this.age_groups.filter(group => !this.excluded.includes(group.value));
+
+    showPassword1 = signal(false);
+    showPassword2 = signal(false);
+    showPasswordLogin = signal(false);
+    togglePassword(x: ReturnType<typeof signal<boolean>>) {
+        x.set(!x());
+    }
 
     signupFormGroup = new FormGroup({
         full_name: new FormControl('', Validators.required),
@@ -140,7 +149,7 @@ export class AuthComponent {
             password: this.signupFormGroup2.value.password || '',
             role: this.signupFormGroup.value.age_group || ''
         });
-        
+
         if (response.userId) {
             this.loading.set(false);
             this.router.navigate(['/auth-status']);
@@ -162,7 +171,7 @@ export class AuthComponent {
         this.ageGroupLogin.set(e.target.value);
     }
 
-    loginError = signal({valid: false, message: ''});
+    loginError = signal({ valid: false, message: '' });
 
     async loginUser() {
         const isChild = this.ageGroupLogin() === 'child';
@@ -191,9 +200,9 @@ export class AuthComponent {
         }
 
         if (response.valid === false) {
-            this.loginError.set({valid: false, message: response.message});
+            this.loginError.set({ valid: false, message: response.message });
             return;
-        } 
+        }
 
         localStorage.setItem('access_token', response.accessToken);
         localStorage.setItem('user_id', response.id);

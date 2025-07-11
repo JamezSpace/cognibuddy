@@ -1,3 +1,22 @@
-h1, h2 {
+h1,
+h2 {
     margin-block: 8px 15px;
+}
+
+.child-summary {
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
 }

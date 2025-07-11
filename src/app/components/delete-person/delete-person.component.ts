@@ -4,7 +4,7 @@ import { User } from '../../interfaces/users.interface';
 import { AdminDashboardService } from '../../services/admin/admin-dashboard.service';
 import { ParentDashboardService } from '../../services/parent/parent-dashboard.service';
 
-export interface UserWithTriggerRole extends User{
+export interface UserWithTriggerRole extends User {
     triggerRole: string;
 }
 
@@ -19,7 +19,7 @@ export class DeletePersonComponent {
     // It can be extended to handle different types of persons if needed
 
     constructor(
-        private parentDashboardService: ParentDashboardService, 
+        private parentDashboardService: ParentDashboardService,
         private adminDashboardService: AdminDashboardService) { }
 
     readonly data = inject<UserWithTriggerRole>(MAT_DIALOG_DATA);
@@ -28,6 +28,7 @@ export class DeletePersonComponent {
     onNoClick(): void {
         this.dialogRef.close();
     }
+
 
     async deletePerson(): Promise<void> {
         if (this.data.triggerRole === 'admin') {
@@ -44,7 +45,7 @@ export class DeletePersonComponent {
             } catch (error) {
                 console.error('Error deleting child:', error);
             }
-        } 
+        }
 
         this.onNoClick()
     }

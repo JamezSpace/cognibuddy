@@ -20,18 +20,18 @@ export class AdminHomeComponent {
     constructor(private adminService: AdminDashboardService, private dialog: MatDialog) { }
 
     users = signal<User[]>([]);
-    // filteredUsers = signal<User[]>([]);
-    filteredUsers = signal<User[]>([
-        {
-            _id: '2',
-            name: "jamnx",
-            role: 'admin',
-            age: 89,
-            createdAt: new Date().toISOString(),
-            email: "sam@abk",
-            verified: true
-        }
-    ]);
+    filteredUsers = signal<User[]>([]);
+    // filteredUsers = signal<User[]>([
+    //     {
+    //         _id: '2',
+    //         name: "jamnx",
+    //         role: 'admin',
+    //         age: 89,
+    //         createdAt: new Date().toISOString(),
+    //         email: "sam@abk",
+    //         verified: true
+    //     }
+    // ]);
 
     ngOnInit() {
         this.loadUsers();
